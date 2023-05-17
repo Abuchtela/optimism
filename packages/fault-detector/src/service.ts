@@ -219,6 +219,8 @@ export class FaultDetector extends BaseServiceV2<Options, Metrics, State> {
 
     // We use this a lot, a bit cleaner to pull out to the top level of the state object.
     this.state.fpw = await this.state.messenger.getChallengePeriodSeconds()
+    this.logger.info(`fault proof window is ${this.state.fpw} seconds`)
+
     if (this.options.bedrock) {
       const oo = this.state.messenger.contracts.l1.L2OutputOracle
       this.state.oo = {
@@ -246,7 +248,8 @@ export class FaultDetector extends BaseServiceV2<Options, Metrics, State> {
       this.logger.info('finding appropriate starting unfinalized batch')
       const firstUnfinalized = await findFirstUnfinalizedStateBatchIndex(
         this.state.oo,
-        this.state.fpw
+        this.state.fpw,
+        this.logger
       )
 
       // We may not have an unfinalized batches in the case where no batches have been submitted
@@ -254,10 +257,8 @@ export class FaultDetector extends BaseServiceV2<Options, Metrics, State> {
       // but it happens often on testnets because the FPW is very short.
       if (firstUnfinalized === undefined) {
         this.logger.info('no unfinalized batches found. skipping all batches.')
-        // `getTotalElements - 1` is the last batch. So the current count of batches
-        // represents the next expected batch to be published
         const totalBatches = await this.state.oo.getTotalElements()
-        this.state.highestCheckedBatchIndex = totalBatches.toNumber()
+        this.state.highestCheckedBatchIndex = totalBatches.toNumber() - 1
       } else {
         this.state.highestCheckedBatchIndex = firstUnfinalized
       }
@@ -265,8 +266,8 @@ export class FaultDetector extends BaseServiceV2<Options, Metrics, State> {
       this.state.highestCheckedBatchIndex = this.options.startBatchIndex
     }
 
-    this.logger.info('starting height', {
-      startBatchIndex: this.state.highestCheckedBatchIndex,
+    this.logger.info('starting batch', {
+      batchIndex: this.state.highestCheckedBatchIndex,
     })
 
     // Set the initial metrics.
@@ -287,7 +288,8 @@ export class FaultDetector extends BaseServiceV2<Options, Metrics, State> {
   async main(): Promise<void> {
     let latestBatchIndex: number
     try {
-      latestBatchIndex = (await this.state.oo.getTotalElements()).toNumber() - 1
+      const totalBatches = await this.state.oo.getTotalElements()
+      latestBatchIndex = totalBatches.toNumber() - 1
     } catch (err) {
       this.logger.error('failed to query total # of batches', {
         error: err,
@@ -303,7 +305,7 @@ export class FaultDetector extends BaseServiceV2<Options, Metrics, State> {
     }
 
     if (this.state.highestCheckedBatchIndex > latestBatchIndex) {
-      this.logger.info('batch index is ahead of L1. waiting...', {
+      this.logger.info('batch index is ahead of the oracle. waiting...', {
         batchIndex: this.state.highestCheckedBatchIndex,
         latestBatchIndex,
       })
@@ -314,7 +316,7 @@ export class FaultDetector extends BaseServiceV2<Options, Metrics, State> {
     this.metrics.highestBatchIndex.set({ type: 'known' }, latestBatchIndex)
     this.logger.info('checking batch', {
       batchIndex: this.state.highestCheckedBatchIndex,
-      latestIndex: latestBatchIndex,
+      latestBatchIndex,
     })
 
     let event: PartialEvent
@@ -474,7 +476,7 @@ export class FaultDetector extends BaseServiceV2<Options, Metrics, State> {
         this.logger.info('L2 node is behind. waiting for sync...', {
           batchBlockStart: batchStart,
           batchBlockEnd: batchEnd,
-          l2Block: latestBlock,
+          l2BlockHeight: latestBlock,
         })
         return
       }
