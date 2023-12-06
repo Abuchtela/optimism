@@ -54,7 +54,7 @@ RUN go install gotest.tools/gotestsum@latest
 RUN go install github.com/vektra/mockery/v2@v2.28.1
 RUN go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.54.2
 
-FROM --platform=linux/amd64 python:3.11.4-slim-bullseye
+FROM --platform=linux/amd64 python:3.11.7-slim-bullseye
 
 ENV GOPATH=/go
 ENV PATH=/usr/local/go/bin:$GOPATH/bin:$PATH
