@@ -20,7 +20,7 @@ WORKDIR /app/indexer
 
 RUN make indexer
 
-FROM alpine:3.18
+FROM alpine:3
 
 COPY --from=builder /app/indexer/indexer /usr/local/bin
 COPY --from=builder /app/indexer/indexer.toml /app/indexer/indexer.toml
