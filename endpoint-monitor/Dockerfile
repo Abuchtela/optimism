@@ -19,7 +19,7 @@ WORKDIR /app/endpoint-monitor
 
 RUN make build
 
-FROM alpine:3.18
+FROM alpine:3
 RUN apk --no-cache add ca-certificates
 
 RUN addgroup -S app && adduser -S app -G app
