@@ -6,36 +6,32 @@ queue_rules:
     queue_conditions:
       - "label!=C-urgent"
       - author!=dependabot[bot]
+      - and:
+          - "#review-threads-unresolved=0"
+          - "#approved-reviews-by>=1"
+          - "#changes-requested-reviews-by=0"
+          - "label!=do-not-merge"
+          - "label!=multiple-reviewers"
+          - "label!=mergify-ignore"
+          - "label!=M-do-not-merge"
+          - "label!=M-multiple-reviewers"
+          - "label!=M-mergify-ignore"
+          - "base=develop"
+    merge_conditions: []
+    merge_bot_account: OptimismBot
+    merge_method: merge
   - name: lowpriority
     queue_conditions:
       - author=dependabot[bot]
 
 pull_request_rules:
-  - name: Automatic merge on approval
-    conditions:
-      - and:
-        - "#review-threads-unresolved=0"
-        - "#approved-reviews-by>=1"
-        - "#changes-requested-reviews-by=0"
-        - "label!=do-not-merge"
-        - "label!=multiple-reviewers"
-        - "label!=mergify-ignore"
-        - "label!=M-do-not-merge"
-        - "label!=M-multiple-reviewers"
-        - "label!=M-mergify-ignore"
-        - "base=develop"
-    actions:
-      queue:
-        name: default
-        method: merge
-        merge_bot_account: OptimismBot
   - name: Add merge train label
     conditions:
       - "queue-position >= 0"
     actions:
       comment:
-          message: |
-            This PR has been added to the merge queue, and will be merged soon.
+        message: |
+          This PR has been added to the merge queue, and will be merged soon.
       label:
         add:
           - S-on-merge-train
@@ -51,7 +47,8 @@ pull_request_rules:
       - conflict
     actions:
       comment:
-        message: Hey @{{author}}! This PR has merge conflicts. Please fix them before continuing review.
+        message: Hey @{{author}}! This PR has merge conflicts. Please fix them before
+          continuing review.
       label:
         add:
           - S-conflict
@@ -321,3 +318,7 @@ pull_request_rules:
       label:
         add:
           - M-ci
+  - name: Automatic merge on approval
+    conditions: []
+    actions:
+      queue:
