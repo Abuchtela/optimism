@@ -68,7 +68,7 @@ RUN --mount=type=cache,target=/root/.cache/go-build cd op-proposer && make op-pr
     GOOS=$TARGETOS GOARCH=$TARGETARCH GITCOMMIT=$GIT_COMMIT GITDATE=$GIT_DATE  VERSION="$OP_PROPOSER_VERSION"
 
 
-FROM alpine:3.18
+FROM alpine:3
 
 COPY --from=builder /app/cannon/bin/cannon /usr/local/bin/
 COPY --from=builder /app/op-program/bin/op-program /usr/local/bin/
