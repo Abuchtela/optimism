@@ -12,7 +12,7 @@ WORKDIR /app
 
 RUN make proxyd
 
-FROM alpine:3.18
+FROM alpine:3
 
 RUN apk add bind-tools jq curl bash git redis
 
