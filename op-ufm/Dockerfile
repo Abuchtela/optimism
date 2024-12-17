@@ -12,7 +12,7 @@ WORKDIR /app
 
 RUN make ufm
 
-FROM alpine:3.18
+FROM alpine:3
 
 COPY --from=builder /app/entrypoint.sh /bin/entrypoint.sh
 COPY --from=builder /app/bin/ufm /bin/ufm
