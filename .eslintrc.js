@@ -9,7 +9,7 @@ module.exports = {
   parser: '@babel/eslint-parser',
   parserOptions: {
     es6: true,
-    ecmaVersion: 6,
+    ecmaVersion: 2021,
     sourceType: 'module',
     requireConfigFile: false,
   },
@@ -20,6 +20,9 @@ module.exports = {
     'eslint-plugin-prefer-arrow',
     'eslint-plugin-react',
     '@typescript-eslint',
+    'eslint-plugin-prettier',
+    'eslint-plugin-node',
+    'eslint-plugin-promise',
   ],
   overrides: [
     {

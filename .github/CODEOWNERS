@@ -44,3 +44,18 @@
 # JavaScript Releases
 /packages/*/CHANGELOG.md @ethereum-optimism/release-managers
 /*/CHANGELOG.md          @ethereum-optimism/release-managers
+
+# Main components
+/README.md               @ethereum-optimism/repo-owners
+/src/index.js            @ethereum-optimism/repo-owners
+/src/components/Header.js @ethereum-optimism/repo-owners
+/src/components/Footer.js @ethereum-optimism/repo-owners
+/src/components/Main.js  @ethereum-optimism/repo-owners
+/src/App.js              @ethereum-optimism/repo-owners
+/src/App.test.js         @ethereum-optimism/repo-owners
+/src/setupTests.js       @ethereum-optimism/repo-owners
+
+# GitHub Actions workflows
+/.github/workflows/ci.yml @ethereum-optimism/workflow-owners
+/.github/workflows/release.yml @ethereum-optimism/workflow-owners
+/.github/dependabot.yml   @ethereum-optimism/workflow-owners
