@@ -41,7 +41,9 @@
     "install:slither": "pip3 install slither-analyzer==$(cat .slitherrc)",
     "print:slither": "slither --version",
     "check:slither": "[[ $(slither --version) = $(cat .slitherrc) ]] && echo '✓ slither versions match' || (echo '✗ slither version mismatch. Run `pnpm upgrade:slither` to upgrade.' && exit 1)",
-    "upgrade:slither": "slither --version > .slitherrc"
+    "upgrade:slither": "slither --version > .slitherrc",
+    "test:unit": "pnpm test",
+    "build:project": "pnpm build"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.23.3",
@@ -78,9 +80,15 @@
     "rimraf": "^5.0.5",
     "ts-mocha": "^10.0.0",
     "typescript": "^5.3.3",
-    "nx-cloud": "latest"
+    "nx-cloud": "latest",
+    "jest": "^29.6.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1"
   },
   "dependencies": {
-    "@changesets/cli": "^2.26.0"
+    "@changesets/cli": "^2.26.0",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.3"
   }
 }

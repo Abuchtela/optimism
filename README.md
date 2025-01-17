@@ -136,3 +136,41 @@ It's strongly recommended to avoid merging PRs into develop during an active rel
 ## License
 
 All other files within this repository are licensed under the [MIT License](https://github.com/ethereum-optimism/optimism/blob/master/LICENSE) unless stated otherwise.
+
+## Purpose of the Repository
+
+The purpose of this repository is to provide the core components of the OP Stack, the decentralized software stack maintained by the Optimism Collective. The OP Stack powers Optimism and forms the backbone of blockchains like OP Mainnet and Base. The repository encourages exploration, modification, extension, and testing of the code to accelerate the development of the Ethereum ecosystem.
+
+## Setting Up the Development Environment
+
+To set up the development environment, follow these steps:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/ethereum-optimism/optimism.git
+   cd optimism
+   ```
+
+2. Install the required dependencies:
+   ```bash
+   pnpm install
+   ```
+
+3. Build the project:
+   ```bash
+   pnpm build
+   ```
+
+## Running Tests and Building the Project
+
+To run tests and build the project, use the following commands:
+
+1. Run tests:
+   ```bash
+   pnpm test
+   ```
+
+2. Build the project:
+   ```bash
+   pnpm build
+   ```
