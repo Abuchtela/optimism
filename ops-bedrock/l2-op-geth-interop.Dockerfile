@@ -1,4 +1,4 @@
-FROM us-docker.pkg.dev/oplabs-tools-artifacts/images/op-geth:v1.101500.0-rc.1
+FROM us-docker.pkg.dev/oplabs-tools-artifacts/images/op-geth:v1.101503.5-rc.1
 # Note: depend on dev-release for sequencer interop message checks
 
 RUN apk add --no-cache jq
