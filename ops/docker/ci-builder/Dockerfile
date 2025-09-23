@@ -11,7 +11,7 @@ RUN docker buildx version
 #                              CI BUILDER (BASE)                              #
 ###############################################################################
 
-FROM --platform=linux/amd64 debian:bullseye-slim AS base-builder
+FROM --platform=linux/amd64 debian:bookworm-slim AS base-builder
 
 # Use bash as the shell
 SHELL ["/bin/bash", "-c"]

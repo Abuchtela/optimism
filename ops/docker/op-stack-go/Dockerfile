@@ -10,14 +10,14 @@
 ARG TARGET_BASE_IMAGE=alpine:3.20
 
 # The ubuntu target base image is used for the op-challenger build with kona and asterisc.
-ARG UBUNTU_TARGET_BASE_IMAGE=ubuntu:22.04
+ARG UBUNTU_TARGET_BASE_IMAGE=ubuntu:24.04
 
 # The version of kona to use.
 # The only build that uses this is `op-challenger-target`.
 ARG KONA_VERSION=none
 
 # We may be cross-building for another platform. Specify which platform we need as builder.
-FROM --platform=$BUILDPLATFORM golang:1.22.7-alpine3.20 AS builder
+FROM --platform=$BUILDPLATFORM golang:1.22.10-alpine3.20 AS builder
 
 RUN apk add --no-cache curl tar gzip make gcc musl-dev linux-headers git jq bash
 
