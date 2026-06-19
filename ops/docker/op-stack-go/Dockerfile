@@ -7,7 +7,7 @@
 
 # All target images use this as base image, and add the final build results.
 # It will default to the target platform.
-ARG TARGET_BASE_IMAGE=alpine:3.20
+ARG TARGET_BASE_IMAGE=alpine:3.22.1
 
 # The ubuntu target base image is used for the op-challenger build with kona and asterisc.
 ARG UBUNTU_TARGET_BASE_IMAGE=ubuntu:22.04
